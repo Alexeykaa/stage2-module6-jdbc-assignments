@@ -3,7 +3,11 @@ package jdbc;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class AppProperties {
+    private static final Logger logger = LoggerFactory.getLogger(AppProperties.class);
 
     private String fileName = "app.properties";
     private Properties prop;
@@ -15,9 +19,13 @@ public class AppProperties {
         this.fileName = fileName;
     }
 
-    public void load() throws IOException {
+    public void load() {
         Properties prop = new Properties();
-        prop.load(this.getClass().getResourceAsStream(fileName));
+        try {
+            prop.load(this.getClass().getResourceAsStream(fileName));
+        } catch (IOException e) {
+            logger.error("Cannot load file property: ", fileName, e);
+        }
         this.prop = prop;
     }
 

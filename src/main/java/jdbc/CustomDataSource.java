@@ -5,7 +5,6 @@ import javax.sql.DataSource;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,7 +28,7 @@ public class CustomDataSource implements DataSource {
         this.password = password;
     }
 
-    public static synchronized CustomDataSource getInstance() throws IOException {
+    public static synchronized CustomDataSource getInstance() {
         if (instance == null) {
             AppProperties props = new AppProperties();
             props.load();
