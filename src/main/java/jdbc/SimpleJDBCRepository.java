@@ -27,11 +27,6 @@ public class SimpleJDBCRepository {
     private PreparedStatement ps = null;
     private Statement st = null;
 
-
-    public Long createUser() {
-        Long result = null;
-        return result;
-    }
     public Long createUser(User user) {
         Long result = null;
         return result;
@@ -49,11 +44,6 @@ public class SimpleJDBCRepository {
 
     public List<User> findAllUser() {
         List<User> result = null;
-        return result;
-    }
-
-    public User updateUser() {
-        User result = new User();
         return result;
     }
 
