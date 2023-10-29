@@ -16,11 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SimpleJDBCRepository {
-
-    private Connection connection = null;
-    private PreparedStatement ps = null;
-    private Statement st = null;
-
     private static final String createUserSQL = "";
     private static final String updateUserSQL = "";
     private static final String deleteUser = "";
@@ -28,7 +23,16 @@ public class SimpleJDBCRepository {
     private static final String findUserByNameSQL = "";
     private static final String findAllUserSQL = "";
 
+    private Connection connection = null;
+    private PreparedStatement ps = null;
+    private Statement st = null;
+
+
     public Long createUser() {
+        Long result = null;
+        return result;
+    }
+    public Long createUser(User user) {
         Long result = null;
         return result;
     }
@@ -53,6 +57,11 @@ public class SimpleJDBCRepository {
         return result;
     }
 
-    private void deleteUser(Long userId) {
+    public User updateUser(User user) {
+        User result = new User();
+        return result;
+    }
+
+    public void deleteUser(Long userId) {
     }
 }
