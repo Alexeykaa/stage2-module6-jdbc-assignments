@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -28,7 +29,7 @@ public class SimpleJDBCRepository {
     private Statement st = null;
 
     public Long createUser(User user) {
-        Long result = null;
+        Long result = 0L;
         return result;
     }
 
@@ -43,7 +44,7 @@ public class SimpleJDBCRepository {
     }
 
     public List<User> findAllUser() {
-        List<User> result = null;
+        List<User> result = new ArrayList<>();
         return result;
     }
 
