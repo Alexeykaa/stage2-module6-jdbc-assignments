@@ -29,18 +29,28 @@ public class SimpleJDBCRepository {
     private static final String findAllUserSQL = "";
 
     public Long createUser() {
+        Long result = null;
+        return result;
     }
 
     public User findUserById(Long userId) {
+        User result = new User();
+        return result;
     }
 
     public User findUserByName(String userName) {
+        User result = new User();
+        return result;
     }
 
     public List<User> findAllUser() {
+        List<User> result = null;
+        return result;
     }
 
     public User updateUser() {
+        User result = new User();
+        return result;
     }
 
     private void deleteUser(Long userId) {
