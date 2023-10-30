@@ -21,11 +21,14 @@ public class CustomDataSource implements DataSource {
     private final String name;
     private final String password;
 
+    private CustomConnector connector;
+
     private CustomDataSource(String driver, String url, String password, String name) {
         this.driver = driver;
         this.url = url;
         this.name = name;
         this.password = password;
+        connector = new CustomConnector();
     }
 
     public static synchronized CustomDataSource getInstance() {
@@ -39,12 +42,12 @@ public class CustomDataSource implements DataSource {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, name, password);
+        return connector.getConnection(url, name, password);
     }
 
     @Override
     public Connection getConnection(String username, String password) throws SQLException {
-        return DriverManager.getConnection(url, username, password);
+        return connector.getConnection(url, username, password);
     }
 
     @Override

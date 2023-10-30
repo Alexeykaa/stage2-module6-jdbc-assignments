@@ -22,7 +22,7 @@ public class AppProperties {
     public void load() {
         Properties prop = new Properties();
         try {
-            prop.load(this.getClass().getResourceAsStream(fileName));
+            prop.load(this.getClass().getClassLoader().getResourceAsStream(fileName));
         } catch (IOException e) {
             logger.error("Cannot load file property: ", fileName, e);
         }
