@@ -4,17 +4,20 @@ import javax.sql.DataSource;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
-import java.util.logging.Logger;
 
 @Getter
 @Setter
 public class CustomDataSource implements DataSource {
+    private static final Logger logger = LoggerFactory.getLogger(CustomDataSource.class);
+
     private static volatile CustomDataSource instance;
     private final String driver;
     private final String url;
@@ -35,7 +38,13 @@ public class CustomDataSource implements DataSource {
         if (instance == null) {
             AppProperties props = new AppProperties();
             props.load();
-            instance = new CustomDataSource(props.getDriver(), props.getUrl(), props.getPassword(), props.getName());
+            String driver = props.getDriver();
+            instance = new CustomDataSource(driver, props.getUrl(), props.getPassword(), props.getName());
+            try {
+                Class.forName(driver);
+            } catch (ClassNotFoundException e) {
+                logger.error("Cannot load JDBC driver: " + driver, e);
+            }
         }
         return instance;
     }
@@ -71,7 +80,7 @@ public class CustomDataSource implements DataSource {
     }
 
     @Override
-    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
         throw new SQLFeatureNotSupportedException();
     }
 
