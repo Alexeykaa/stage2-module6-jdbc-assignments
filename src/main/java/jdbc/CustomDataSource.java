@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 @Setter
 public class CustomDataSource implements DataSource {
 
-    private static volatile CustomDataSource instance;
+    private static CustomDataSource instance;
     private final String driver;
     private final String url;
     private final String name;
