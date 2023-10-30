@@ -136,7 +136,7 @@ public class SimpleJDBCRepository {
     }
 
     private User map(ResultSet rs) throws SQLException {
-        return new User(rs.getLong(1), rs.getString(2), rs.getString(3),
-                rs.getInt(4));
+        return User.builder().id(rs.getLong(1)).firstName(rs.getString(2))
+                .lastName(rs.getString(3)).age(rs.getInt(4)).build();
     }
 }
