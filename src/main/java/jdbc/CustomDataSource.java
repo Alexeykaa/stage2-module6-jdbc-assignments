@@ -38,13 +38,7 @@ public class CustomDataSource implements DataSource {
         if (instance == null) {
             AppProperties props = new AppProperties();
             props.load();
-            String driver = props.getDriver();
-            instance = new CustomDataSource(driver, props.getUrl(), props.getPassword(), props.getName());
-            try {
-                Class.forName(driver);
-            } catch (ClassNotFoundException e) {
-                logger.error("Cannot load JDBC driver: " + driver, e);
-            }
+            instance = new CustomDataSource(props.getDriver(), props.getUrl(), props.getPassword(), props.getName());
         }
         return instance;
     }
