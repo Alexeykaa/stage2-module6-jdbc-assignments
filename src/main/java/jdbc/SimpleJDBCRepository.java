@@ -38,24 +38,22 @@ public class SimpleJDBCRepository {
 
     public Long createUser(User user) {
         Long userId = null;
-        ResultSet rs = null;
-        try {
-            connection = CustomDataSource.getInstance().getConnection();
-            ps = connection.prepareStatement(CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = CustomDataSource.getInstance().getConnection();
+             PreparedStatement ps = connection.prepareStatement(CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS)
+        ) {
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setInt(3, user.getAge());
             int affectedRows = ps.executeUpdate();
             if (affectedRows > 0) {
-                rs = ps.getGeneratedKeys();
+                ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
                     userId = rs.getLong(1);
                 }
+                rs.close();
             }
         } catch (SQLException e) {
             logger.error("Cannot insert user {}", user, e);
-        } finally {
-            close(connection, ps, rs);
         }
         return userId;
     }

@@ -22,13 +22,13 @@ public class AppProperties {
     }
 
     public void load() {
-        Properties prop = new Properties();
+        Properties properties = new Properties();
         try {
-            prop.load(this.getClass().getClassLoader().getResourceAsStream(fileName));
+            properties.load(this.getClass().getClassLoader().getResourceAsStream(fileName));
         } catch (IOException e) {
             logger.error("Cannot load file property: {}", fileName, e);
         }
-        this.prop = prop;
+        this.prop = properties;
     }
 
     public String getDriver() {
