@@ -4,19 +4,17 @@ import javax.sql.DataSource;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
+import java.util.logging.Logger;
 
 @Getter
 @Setter
 public class CustomDataSource implements DataSource {
-    private static final Logger logger = LoggerFactory.getLogger(CustomDataSource.class);
 
     private static volatile CustomDataSource instance;
     private final String driver;
@@ -74,13 +72,13 @@ public class CustomDataSource implements DataSource {
     }
 
     @Override
-    public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException {
+    public Logger getParentLogger() throws SQLFeatureNotSupportedException {
         throw new SQLFeatureNotSupportedException();
     }
 
     @Override
     public <T> T unwrap(Class<T> iface) throws SQLException {
-        throw new SQLException("no object found that implements the interface");
+        throw new SQLException("No object found that implements the interface");
     }
 
     @Override

@@ -23,13 +23,14 @@ public class SimpleJDBCRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleJDBCRepository.class);
 
-    private static final String createUserSQL = "insert into myusers(firstname, lastname, age) values (?, ?, ?)";
-    private static final String updateUserSQL = "update myusers set firstname = ?, lastname = ?, age = ? where id = ?";
-    private static final String deleteUser = "delete from myusers where id = ?";
-    private static final String findUserByIdSQL = "select id, firstname, lastname, age from myusers where id = ?";
-    private static final String findUserByNameSQL =
+    private static final String CREATE_USER_SQL = "insert into myusers(firstname, lastname, age) values (?, ?, ?)";
+    private static final String UPDATE_USER_SQL =
+            "update myusers set firstname = ?, lastname = ?, age = ? where id = ?";
+    private static final String DELETE_USER_SQL = "delete from myusers where id = ?";
+    private static final String FIND_USER_BY_ID_SQL = "select id, firstname, lastname, age from myusers where id = ?";
+    private static final String FIND_USER_BY_NAME_SQL =
             "select id, firstname, lastname, age from myusers where firstname like ? or lastname like ?";
-    private static final String findAllUserSQL = "select id, firstname, lastname, age from myusers";
+    private static final String FIND_ALL_USER_SQL = "select id, firstname, lastname, age from myusers";
 
     private Connection connection = null;
     private PreparedStatement ps = null;
@@ -40,7 +41,7 @@ public class SimpleJDBCRepository {
         ResultSet rs = null;
         try {
             connection = CustomDataSource.getInstance().getConnection();
-            ps = connection.prepareStatement(createUserSQL, Statement.RETURN_GENERATED_KEYS);
+            ps = connection.prepareStatement(CREATE_USER_SQL, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setInt(3, user.getAge());
@@ -64,7 +65,7 @@ public class SimpleJDBCRepository {
         ResultSet rs = null;
         try {
             connection = CustomDataSource.getInstance().getConnection();
-            ps = connection.prepareStatement(findUserByIdSQL);
+            ps = connection.prepareStatement(FIND_USER_BY_ID_SQL);
             ps.setLong(1, userId);
             rs = ps.executeQuery();
             if (rs.next()) {
@@ -86,7 +87,7 @@ public class SimpleJDBCRepository {
         ResultSet rs = null;
         try {
             connection = CustomDataSource.getInstance().getConnection();
-            ps = connection.prepareStatement(findUserByNameSQL);
+            ps = connection.prepareStatement(FIND_USER_BY_NAME_SQL);
             ps.setString(1, userName);
             ps.setString(2, userName);
             rs = ps.executeQuery();
@@ -109,7 +110,7 @@ public class SimpleJDBCRepository {
         try {
             connection = CustomDataSource.getInstance().getConnection();
             st = connection.createStatement();
-            rs = st.executeQuery(findAllUserSQL);
+            rs = st.executeQuery(FIND_ALL_USER_SQL);
             while (rs.next()) {
                 result.add(parse(rs));
             }
@@ -125,7 +126,7 @@ public class SimpleJDBCRepository {
         User result = null;
         try {
             connection = CustomDataSource.getInstance().getConnection();
-            ps = connection.prepareStatement(updateUserSQL);
+            ps = connection.prepareStatement(UPDATE_USER_SQL);
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setInt(3, user.getAge());
@@ -145,7 +146,7 @@ public class SimpleJDBCRepository {
     public void deleteUser(Long userId) {
         try {
             connection = CustomDataSource.getInstance().getConnection();
-            ps = connection.prepareStatement(deleteUser);
+            ps = connection.prepareStatement(DELETE_USER_SQL);
             ps.setLong(1, userId);
             int deletedRows = ps.executeUpdate();
             logger.debug("Deleted users count {}", deletedRows);
